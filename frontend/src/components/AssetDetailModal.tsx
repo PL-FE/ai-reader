@@ -80,12 +80,15 @@ export const AssetDetailModal: React.FC<AssetDetailModalProps> = ({
             <div className="space-y-6">
               {/* 上半部分：大图与核心参数 */}
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                {/* 缩略图大图 */}
-                <div className="md:col-span-7 overflow-hidden rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center">
+                {/* 缩略图大图 (标准工程四视图) */}
+                <div className="md:col-span-7 relative overflow-hidden rounded-xl bg-zinc-950 border border-zinc-800 flex items-center justify-center p-1 group">
+                  <div className="absolute top-2.5 left-2.5 z-10 flex items-center space-x-1.5 rounded-md bg-zinc-900/90 border border-blue-500/30 px-2 py-0.5 text-[11px] font-medium text-blue-400 backdrop-blur-md shadow-md">
+                    <span>📐 CAD 标准四视图 (正视·侧视·顶视·3D轴测)</span>
+                  </div>
                   <img
                     src={asset.thumbnail_url}
                     alt={asset.title}
-                    className="max-h-[380px] w-full object-contain"
+                    className="max-h-[380px] w-full object-contain rounded-lg shadow-inner"
                     onError={(e) => {
                       (e.target as HTMLElement).setAttribute('src', '/thumbnails/default_model.png');
                     }}

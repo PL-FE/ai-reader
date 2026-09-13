@@ -54,6 +54,12 @@ export const AssetCard: React.FC<AssetCardProps> = ({ asset, onClick, onFindSimi
           </span>
         </div>
 
+        <div className="absolute bottom-2.5 left-2.5 z-10">
+          <span className="rounded-md bg-zinc-950/80 px-1.5 py-0.5 text-[10px] font-medium text-blue-400 backdrop-blur-md border border-blue-500/20 shadow-sm flex items-center space-x-1">
+            <span>📐 四视图</span>
+          </span>
+        </div>
+
         {/* 快捷悬浮操作浮层 */}
         <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-end justify-between p-3">
           <button

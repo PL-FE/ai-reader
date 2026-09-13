@@ -228,13 +228,36 @@ class SKPParser:
         elif any(w in lower_name for w in ["门", "door", "商铺", "门头", "8.skp"]):
             width_mm, depth_mm, height_mm = 3600, 1500, 2800
 
+        # 6. 生成标准四视图工程图纸并直接作为主封面（替换原始随机快照）
+        from app.services.blueprint_generator import BlueprintGenerator
+        quad_thumb_filename = f"{base_name}_blueprint_{abs(hash(file_path)) % 1000000}.png"
+        quad_thumb_path = os.path.join(thumbnail_dir, quad_thumb_filename)
+        
+        try:
+            BlueprintGenerator.generate_quad_view(
+                title=base_name,
+                width_mm=width_mm,
+                depth_mm=depth_mm,
+                height_mm=height_mm,
+                category="三维资产",
+                su_version=su_version,
+                output_path=quad_thumb_path,
+                raw_snapshot_path=thumb_path if has_thumbnail else None,
+                style=style
+            )
+            main_thumbnail_url = f"/thumbnails/{quad_thumb_filename}"
+        except Exception as e:
+            # 降级容错
+            main_thumbnail_url = thumbnail_url
+
         return {
             "filename": filename,
             "file_path": os.path.abspath(file_path),
             "file_size": file_size,
             "su_version": su_version,
-            "thumbnail_url": thumbnail_url,
-            "has_thumbnail": has_thumbnail,
+            "thumbnail_url": main_thumbnail_url,
+            "raw_snapshot_url": thumbnail_url,
+            "has_thumbnail": True,
             "width_mm": width_mm,
             "depth_mm": depth_mm,
             "height_mm": height_mm,
