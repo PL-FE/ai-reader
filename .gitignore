@@ -1,0 +1,23 @@
+# 本地私密配置文件（包含真实 API 密钥，绝不上 Git）
+.env.local
+.env.*.local
+*.local
+
+# Python 缓存与虚拟环境
+__pycache__/
+*.py[cod]
+*$py.class
+backend/venv/
+backend/env/
+*.db
+*.sqlite3
+
+# Node 依赖与构建产物
+node_modules/
+frontend/dist/
+backend/static/assets/
+backend/static/index.html
+
+# 系统文件
+.DS_Store
+Thumbs.db
