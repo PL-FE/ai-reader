@@ -21,3 +21,11 @@ backend/static/index.html
 # 系统文件
 .DS_Store
 Thumbs.db
+
+# 媒体与模型资源（真实大文件不上 Git）
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/thumbnails/*
+!backend/thumbnails/.gitkeep
+!backend/thumbnails/default_model.png
+backend/storage/models/**/*.skp
