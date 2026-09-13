@@ -18,3 +18,6 @@ openai>=1.50.0
 # 数据库与向量库（阶段二/三使用，先备齐）
 sqlmodel>=0.0.22
 chromadb>=0.5.5
+python-multipart>=0.0.9
+pillow>=10.0.0
+rapidocr_onnxruntime>=1.3.0

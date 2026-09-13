@@ -1,167 +1,154 @@
-# 🧠 AI 智能网页研报速读助手 (AI Reader)
+# 知模 (ZhiMoHub) —— 团队级 SketchUp 3D 资产智能检索与管理平台
 
-> 🚀 **专为前端工程师进阶 AI 全栈打造的实战示范项目**  
-> Modern React 19 + Python FastAPI + 流式 SSE + 多轮研报智能对话 + 单端口一键极简托管
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.11+-blue.svg" alt="Python Version" />
+  <img src="https://img.shields.io/badge/FastAPI-0.115+-009688.svg" alt="FastAPI" />
+  <img src="https://img.shields.io/badge/React-19.2+-61DAFB.svg" alt="React" />
+  <img src="https://img.shields.io/badge/TailwindCSS-v4-38B2AC.svg" alt="TailwindCSS" />
+  <img src="https://img.shields.io/badge/Database-SQLite%20%2F%20SQLModel-4169E1.svg" alt="SQLModel" />
+  <img src="https://img.shields.io/badge/License-MIT-green.svg" alt="License" />
+</p>
 
-[![React](https://img.shields.io/badge/React-19-61dafb?logo=react&logoColor=black)](https://react.dev/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-38bdf8?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Python](https://img.shields.io/badge/Python-3.10+-3776ab?logo=python&logoColor=white)](https://www.python.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-
----
-
-## 📖 项目简介
-
-**AI 智能网页研报速读助手** 是一款面向现代开发者的长文研报提炼与上下文问答工具。只需输入任意技术博客、行业分析或研报文章的 URL，系统即可自动抽取正文正文并过滤广告杂质，基于大语言模型（LLM）实现**流式生成核心要点总结**，并通过现代化对话界面对研报细节展开**多轮深度追问**。
-
-本项目严格遵循 **“开发即教程，步步皆沉淀”** 的理念，代码中包含大量**前后端概念降维类比**注释，是前端工程师平滑转型 AI 全栈开发（AI Engineer）的开箱即用学习级模版。
+> **知模 (ZhiMoHub)** 是一款专为风景园林设计院、城市规划机构与公园景观团队打造的 **SketchUp (.skp) 3D 资产私有化智能检索与管理系统**。  
+> 参考知名 3D 资产平台“知末 (`su.znzmo.com`)”的高效交互体验，具备**毫秒级无头提取内嵌缩略图**、**SketchUp 2018~2026 全版本精准识别**、**空间三维尺寸过滤**、**景观智能语义自动分类**与**相似模型空间比例聚类**能力。
 
 ---
 
-## ✨ 核心特性
+## 🎯 解决的核心痛点
 
-- ⚡ **URL 一键精准抽取**：基于 Trafilatura 网页提取算法，自动剔除导航、侧边栏及广告噪声，秒级还原纯净正文与元信息。
-- 🌊 **毫秒级 SSE 流式打字机**：利用 Server-Sent Events (`text/event-stream`) 协议，告别漫长等待，服务端逐字推送大模型分析洞见。
-- 💬 **沉浸式上下文多轮对话**：深度集成现代 `@assistant-ui/react` 交互体系，AI 结合当前研报背景提供精准解答。
-- 🎨 **现代化极致 UI 美学**：采用 React 19 + TypeScript + Tailwind CSS v4 构建，支持 GFM Markdown 语法、代码高亮与动态流式呈现。
-- 🚀 **单端口全栈极简托管**：FastAPI 直接托管编译后的前端 SPA 产物，`./start.sh` 脚本一键启动全栈服务，彻底告别跨端口地狱。
-- 🔒 **企业级密钥安全隔离**：所有大模型 API Key 均由后端 `.env` 严格保护，前端绝不暴露任何机密凭据；内置无 Key 离线拟真回退机制。
+1. **摆脱“黑盒找模型”**：海量景观植物、小品设施 `.skp` 文件存放在服务器或电脑中，免装 SketchUp 即可通过网页秒看真实视口高清缩略图。
+2. **防踩版本不兼容坑**：精准识别 SketchUp 2026/2024/2023/2022/2021 等全版本（支持 UTF-16LE 文件头与 ZIP 容器原生解构），低版本客户端快速筛选可用模型。
+3. **尺寸精准匹配**：支持长宽高（X/Y/Z）物理空间包围盒滑动筛选，找景观乔木、小品构件再也不会尺寸比例失调。
+4. **风景园林专业分类与找相似**：基于文件名、构件名及三维比例（长宽深比），自动归入园林植物与绿化、街景设施与城市家具、公园小品与构筑物、景观雕塑、商业外摆等专业品类，一键查找形态相似款。
 
 ---
 
-## 🗺️ 前后端概念对照表（前端同学友好指南）
+## 🏗️ 全栈技术架构
 
-| 后端 / AI 概念 | 前端工程师熟悉的概念 | 通俗通晓的一句话解释 |
-| :--- | :--- | :--- |
-| **Python venv** | `node_modules` 文件夹 | 隔离每个项目的依赖包，防止全局版本冲突。 |
-| **FastAPI** | Express / Koa / Next.js Route Handlers | 轻量、现代、带自动化 OpenAPI 文档的高性能后端框架。 |
-| **Pydantic** | TypeScript interface + Zod Schema | 入参出参的强类型约束契约，字段校验失败自动拦截报错。 |
-| **SSE (Server-Sent Events)** | `ReadableStream` / EventSource | 单向长链接通道，大模型打字机流式输出的功臣。 |
-| **SQLModel (ORM)** | Prisma / Drizzle / TypeORM | 用对象定义代替手写原生 SQL，优雅操作数据库。 |
-| **ChromaDB (向量库)** | 语义特征向量缓存池 | 把文字转化为坐标数组（Embedding），通过余弦距离检索最相似内容。 |
-
----
-
-## 🛠️ 技术架构
-
-```text
-ai-reader/
-├── backend/                  # 🐍 Python FastAPI 后端
-│   ├── app/
-│   │   ├── api/              # 路由层 (类似 Express router / Next.js app/api)
-│   │   │   └── reader.py     # 提取文章、流式总结、多轮对话接口
-│   │   ├── core/             # 核心配置 (Pydantic BaseSettings 读取 .env)
-│   │   │   └── config.py
-│   │   └── services/         # 业务服务层
-│   │       ├── extractor.py  # 网页正文抓取与清洗服务 (Trafilatura)
-│   │       └── llm.py        # 大模型流式调用与兜底模拟生成
-│   ├── requirements.txt      # 后端依赖清单
-│   └── .env.example          # 环境变量示例模版
-│
-├── frontend/                 # ⚛️ React 19 前端应用
-│   ├── src/
-│   │   ├── components/       # 业务组件 (阅读器、对话框、Markdown 渲染)
-│   │   ├── App.tsx           # 主页面布局与状态编排
-│   │   └── main.tsx          # 前端入口
-│   ├── package.json          # 前端依赖配置 (Vite + React 19 + Tailwind v4)
-│   └── vite.config.ts        # Vite 打包配置 (自动输出至 backend/static)
-│
-├── docs/                     # 📚 系列实战教程文档
-│   └── 01-前端转型AI全栈-项目初始化与流式MVP.md
-├── start.sh                  # 🚀 一键编译前端并启动全栈脚本
-└── README.md
+```mermaid
+graph TD
+    A[设计师 / 团队成员 Web 端 (React 19 + TailwindCSS v4)] -->|拖拽上传 .skp / 复合多维检索| B[FastAPI 高性能服务网关]
+    DIR[服务器本地磁盘模型目录] -->|递归扫描索引| B
+    
+    B --> C[SKP 二进制无头解析引擎]
+    C --> C1[版本识别: UTF-16LE 精准解析 SketchUp 2018~2026]
+    C --> C2[缩略图抽取: ZIP 容器 / PNG 魔数毫秒级抽取原生原图]
+    C --> C3[智能分类器: 语义规则 + 空间三维比例相似度聚类]
+    
+    C --> D[(SQLite + SQLModel 核心元数据库)]
+    C2 --> E[服务器本地缩略图静态缓存 (thumbnails/)]
+    C --> F[服务器本地模型分类存储归档 (storage/models/)]
 ```
 
+- **后端体系**：Python 3.11 + FastAPI + SQLModel (SQLite 零运维单文件存储) + 纯 Python 二进制流解析。
+- **前端体系**：React 19 + Vite + TailwindCSS v4 + Lucide-react 图标库。
+- **架构亮点**：**单端口极简托管** —— React 打包产物直接由 FastAPI 进行静态资源托管与 SPA 兜底，启动一个 Python 进程即可服务整个局域网团队。
+
 ---
 
-## 🚀 快速开始
+## 🚀 极速启动指南
 
 ### 1. 环境准备
+- Python 3.11+
+- Node.js 18+ 与 pnpm / npm
 
-确保您的本地环境中已安装：
-- **Node.js**: >= 18.0.0
-- **pnpm**: 推荐（或 npm / yarn）
-- **Python**: >= 3.10
-
-### 2. 配置环境变量
-
-进入 `backend` 目录，复制环境变量模版并填入您的大模型 API Key：
+### 2. 一键启动全栈服务 (本地开发/单机运行)
+项目根目录下提供了全自动化的一键编译与启动脚本：
 
 ```bash
-cd backend
-cp .env.example .env
-```
-
-编辑 `backend/.env` 文件：
-
-```env
-# 填入您的真实 API Key (支持 DeepSeek, OpenAI, Kimi, 智谱等兼容接口)
-# 若留空，系统会自动启用高质量的本地流式拟真演示模式
-OPENAI_API_KEY=sk-your-key-here
-
-# API 地址 (默认使用高性价比的 DeepSeek)
-OPENAI_BASE_URL=https://api.deepseek.com/v1
-
-# 模型名称
-MODEL_NAME=deepseek-chat
-```
-
-### 3. 一键全栈启动（生产级单端口托管模式）
-
-在项目根目录下，直接运行一键脚本：
-
-```bash
-chmod +x start.sh
+chmod +x ./start.sh
 ./start.sh
 ```
 
-该脚本将自动：
-1. 编译打包 React 前端并直接输出至后端的 `backend/static` 目录；
-2. 检查并自动创建 Python 虚拟环境，补齐依赖包；
-3. 检查端口占用并启动统一托管服务；
-4. 浏览器访问 **`http://127.0.0.1:8000`** 即可开始使用！
+脚本将自动完成：
+1. 编译前端生产静态资源并输出至后端 `backend/static/` 目录；
+2. 自动安装 Python 虚拟环境与依赖包；
+3. 清理并释放 8000 端口，拉起全栈服务。
+
+打开浏览器访问：**`http://127.0.0.1:8000`** 即可使用！
 
 ---
 
-## 💻 研发调试模式（前端热重载）
+## 🐳 Docker 容器化一键部署 (团队推荐)
 
-如果您需要对前端界面或组件进行频繁调整，建议开启前后端分离的热重载开发模式：
+由于知模采用**单端口统一托管架构**，无需配置反向代理或复杂的多个容器，一个标准的轻量容器即可运行全部功能！
 
-### 启动后端 API 服务：
-
-```bash
-cd backend
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
-```
-
-### 启动前端 Vite 开发服务器：
+### 快速拉起 (docker-compose)
+在项目根目录下直接执行：
 
 ```bash
-cd frontend
-pnpm install
-pnpm run dev
+# 后台构建并启动知模全栈服务
+docker compose up -d --build
 ```
 
-前端将在 `http://localhost:5173` 启动，享受 Vite 8 毫秒级的热更新（HMR）。
+### 数据持久化保障
+`docker-compose.yml` 已经默认配置了宿主机数据卷挂载：
+- `./backend/storage`: 持久化存储模型物理 `.skp` 文件（按分类自动归档，容器销毁升级资产永不丢失）；
+- `./backend/thumbnails`: 持久化存储提取的原生缩略图缓存；
+- `./backend/zhimo_assets.db`: 持久化存储 SQLite 资产元数据库。
+
+查看容器运行状态：
+```bash
+docker compose ps
+docker compose logs -f
+```
+访问地址：`http://服务器IP:8000`
 
 ---
 
-## 📚 沉淀教程连载
+## 📂 核心目录结构说明
 
-本项目附带专门针对前端开发者的 AI 全栈进阶系列实战教程：
+```
+ai-reader/ (知模 ZhiMoHub)
+├── start.sh                       # 一键全栈编译与启动脚本
+├── README.md                      # 项目说明文档
+├── AGENTS.md                      # AI 协作规范与架构指引
+├── backend/                       # Python FastAPI 后端
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── assets.py          # 3D 资产管理核心路由（检索/上传/扫盘/找相似）
+│   │   ├── core/
+│   │   │   ├── config.py          # 全局配置 (Pydantic Settings)
+│   │   │   └── db.py              # 数据库连接与 Session 管理
+│   │   ├── models/
+│   │   │   └── asset.py           # ModelAsset 核心数据模型
+│   │   ├── services/
+│   │   │   ├── skp_parser.py      # SKP 二进制解析与缩略图提取器 (支持SU 2026)
+│   │   │   └── classifier.py      # 智能自动分类与空间相似度打分算法
+│   │   └── main.py                # FastAPI 入口与单端口静态托管
+│   ├── storage/models/            # 服务器本地模型分类归档存储
+│   ├── thumbnails/                # 提取出的缩略图缓存目录
+│   └── requirements.txt           # Python 依赖清单
+├── frontend/                      # React 19 前端工程
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Header.tsx         # 顶部品牌导航与搜索框
+│   │   │   ├── CategoryBar.tsx    # 品类胶囊栏与版本/尺寸多维过滤器
+│   │   │   ├── AssetCard.tsx      # 高质感模型卡片（尺寸胶囊/找相似/复制直链）
+│   │   │   ├── AssetDetailModal.tsx # 详情弹窗与相似款推荐流
+│   │   │   ├── UploadModal.tsx    # 拖拽上传弹窗
+│   │   │   └── ScanModal.tsx      # 服务器本地目录扫盘弹窗
+│   │   ├── services/api.ts        # 前端 API 交互服务
+│   │   └── App.tsx                # 主看板页面
+└── docs/                          # 连载实战技术教程
+```
 
-- 📖 **[教程 01：前端转型 AI 全栈（一）：现代 React + Python FastAPI 双层架构与单端口托管 MVP](docs/01-前端转型AI全栈-项目初始化与流式MVP.md)**
-- ⏳ **教程 02**：让数据落地——用 SQLModel + SQLite 打造零运维文章知识库（即将推出）
-- ⏳ **教程 03**：搞懂 RAG——接入 ChromaDB 向量数据库实现跨文章语义检索（规划中）
-- ⏳ **教程 04**：极致交互体验——划词提问、原文精准回溯与一键容器化部署（规划中）
+---
+
+## 🔌 核心 API 概览
+
+| 请求方法 | 路径 | 功能说明 |
+| :--- | :--- | :--- |
+| `GET` | `/api/assets/search` | 多维复合检索（支持关键词、分类、SU版本、长宽高过滤、排序） |
+| `GET` | `/api/assets/categories` | 获取品类列表及各分类下的模型数量统计 |
+| `GET` | `/api/assets/{id}` | 获取单个模型详情（尺寸/构件/材质），累加浏览量 |
+| `GET` | `/api/assets/{id}/similar`| **智能相似模型推荐**（基于三维长宽深比与语义匹配） |
+| `GET` | `/api/assets/{id}/download`| 一键下载原始 `.skp` 3D 模型物理文件 |
+| `POST`| `/api/assets/upload` | 网页端拖拽上传 `.skp` 模型，毫秒级提取缩略图并按分类归档入库 |
+| `POST`| `/api/assets/scan` | 指定服务器本地物理文件夹全盘扫描建立索引 |
 
 ---
 
 ## 📄 开源许可证
 
-本项目基于 [MIT](LICENSE) 许可证开源，欢迎自由学习、演进与用于个人项目。
+本项目基于 [MIT License](LICENSE) 开源。

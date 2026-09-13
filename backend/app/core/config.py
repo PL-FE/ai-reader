@@ -14,16 +14,16 @@ backend_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."
 
 class Settings(BaseSettings):
     # 项目基本信息
-    PROJECT_NAME: str = "AI 智能网页研报速读助手"
+    PROJECT_NAME: str = "知模 (ZhiMoHub) 3D 资产智能检索平台"
     API_V1_STR: str = "/api"
     
-    # 大模型服务配置 (默认支持 DeepSeek / 任何兼容 OpenAI 格式的接口)
+    # 大模型服务配置 (用于后续扩展自然语言多模态语义搜索)
     OPENAI_API_KEY: str = ""
     OPENAI_BASE_URL: str = "https://api.deepseek.com/v1"
     MODEL_NAME: str = "deepseek-chat"
 
     # 数据库路径 (SQLite 单文件，零运维)
-    DATABASE_URL: str = "sqlite:///./ai_reader.db"
+    DATABASE_URL: str = "sqlite:///./zhimo_assets.db"
 
     class Config:
         # 支持同时读取 .env 和 .env.local，兼顾根目录或 backend 目录运行

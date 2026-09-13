@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  zhimohub:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: zhimohub
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      # 1. 持久化存储模型物理文件（非常重要：容器销毁升级模型绝不丢失）
+      - ./backend/storage:/app/storage
+      # 2. 持久化存储提取的缩略图缓存
+      - ./backend/thumbnails:/app/thumbnails
+      # 3. 持久化存储 SQLite 元数据库
+      - ./backend/zhimo_assets.db:/app/zhimo_assets.db
+    environment:
+      - TZ=Asia/Shanghai
+      - PROJECT_NAME=知模 (ZhiMoHub) 3D 资产智能检索平台
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

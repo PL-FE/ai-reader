@@ -12,13 +12,19 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from app.core.config import settings
-from app.api.reader import router as reader_router
+from app.core.db import init_db
+from app.api.assets import router as assets_router, THUMBNAIL_DIR
 
 app = FastAPI(
-    title=settings.PROJECT_NAME,
-    description="面向现代前端全栈学习者的 AI 网页研报速读与知识库系统",
-    version="1.0.0",
+    title="知模 (ZhiMoHub) 3D 资产智能检索平台",
+    description="面向团队与设计工作室的 SketchUp 3D 资产私有云智能检索与协同管理系统",
+    version="2.0.0",
 )
+
+# 启动时初始化数据库表
+@app.on_event("startup")
+def on_startup():
+    init_db()
 
 # 1. 配置 CORS 跨域（方便前端在 Vite 开发环境 5173 端口调试）
 app.add_middleware(
@@ -29,15 +35,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 2. 注册核心业务路由
-app.include_router(reader_router, prefix=settings.API_V1_STR)
+# 2. 挂载缩略图静态资源目录
+app.mount("/thumbnails", StaticFiles(directory=THUMBNAIL_DIR), name="thumbnails")
+
+# 3. 注册核心业务路由
+app.include_router(assets_router, prefix=settings.API_V1_STR)
 
 @app.get("/api/health", tags=["基础监控"])
 async def health_check():
-    """基础健康检查接口（类似心跳检测）"""
+    """基础健康检查接口"""
     return {
         "status": "ok",
-        "service": settings.PROJECT_NAME,
+        "service": "知模 (ZhiMoHub) 3D 资产智能检索平台",
         "mode": "development" if not os.path.exists("static/index.html") else "production-hosted"
     }
 
